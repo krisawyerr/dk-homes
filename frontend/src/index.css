@@ -1,0 +1,20 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+body {
+  background-color: #333333;
+  color: #ffffff;
+  font-family: 'sans-serif', Tahoma, Geneva, Verdana, 'Segoe UI';
+}
+
+
+.homeGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.purchseGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
