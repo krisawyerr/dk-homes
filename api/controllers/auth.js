@@ -21,7 +21,7 @@ export const authenticate = (req, res) => {
             });
         } else {
             // Login
-            const isPasswordCorrect = (data[0].password === password);
+            const isPasswordCorrect = (data[0].password === req.body.password);
             
             if (!isPasswordCorrect) {
                 return res.status(400).json("Wrong email or password!");

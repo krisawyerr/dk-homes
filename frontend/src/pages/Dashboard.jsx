@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from "axios";
 import NFTAbi from '../ContractsData/MyNFT.json'
 import NFTAddress from '../ContractsData/MyNFT-address.json'
 import { ethers } from "ethers"
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar';
+import { AuthContext } from "../context/authContext";
 
-const Dashboard = () => {
+const Dashboard = () => {  
+    const { currentUser, login, logout } = useContext(AuthContext);
     const navigate = useNavigate();
     const [home, setHome] = useState([]);
     const homeId = parseInt(window.location.pathname.split('/').pop());
@@ -49,21 +51,11 @@ const Dashboard = () => {
         loadBlockchainData()
     }, [])
 
-    const connectHandler = async () => {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
-        const account = ethers.utils.getAddress(accounts[0])
-        setAccount(account)
-        setIsYourHome(account === owner ? true : false)
-    }
-
-    console.log(owner)
-
     return (
         <>         
         <Navbar />             
-        {account === null && <button onClick={connectHandler}>Connect to MetaMask</button>}
-        {account !== null && isYourHome === true && <div>Dashboard</div>}
-        {account !== null && isYourHome === false && <div>
+        {owner === currentUser.username && <div>Dashboard</div>}
+        {owner !== currentUser.username && <div>
             <h1>You do not own this home!</h1>
             <a href="/myhomes"><button>Return to My Homes</button></a>
         </div>}

@@ -18,3 +18,9 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 50px;
+}

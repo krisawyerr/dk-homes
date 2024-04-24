@@ -1,19 +1,25 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 
+import { ethers } from "ethers"
+
 export const AuthContext = createContext()
 
 export const AuthContextProvider = ({children}) => {
     const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem("user") || null));
-    const [currentAccount, setCurrentAccount] = useState(JSON.parse(localStorage.getItem("account") || null));
 
-    const login = async(username, password, account) => {
+    const login = async() => {
+
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+        const account = ethers.utils.getAddress(accounts[0])
+
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+
         const res = await axios.post("http://localhost:8800/api/auth/authenticate", {
-            username,
-            password,
+            username: account,
+            password: account,
         });
         setCurrentUser(res.data)
-        setCurrentAccount(account)
     }
 
     const logout = async(input) => {
@@ -26,12 +32,8 @@ export const AuthContextProvider = ({children}) => {
         localStorage.setItem("user", JSON.stringify(currentUser))
     }, [currentUser])
 
-    useEffect(() => {
-        localStorage.setItem("account", JSON.stringify(currentAccount))
-    }, [currentAccount])
-
     return (
-        <AuthContext.Provider value={{ currentUser, currentAccount, login, logout }}>
+        <AuthContext.Provider value={{ currentUser, login, logout }}>
           {children}
         </AuthContext.Provider>
     );

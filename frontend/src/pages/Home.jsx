@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from "axios";
 import Navbar from '../components/Navbar';
+import { AuthContext } from "../context/authContext";
 
 const Home = () => {
   const [homes, setHomes] = useState([]);
+  const { currentUser, login, logout } = useContext(AuthContext);
+
+  console.log(currentUser)
 
   const fetchData = async () => {
     try {

@@ -44,22 +44,19 @@ const Purchase = () => {
     loadBlockchainData()
   }, [])
 
-  const updateHomeForSaleStatus = async () => {
+  const updateHomeForSaleStatus = async (owner) => {
     try {
-      const res = await axios.post(`http://localhost:8800/api/homes/makeHomeSold`, {
+      await axios.post(`http://localhost:8800/api/homes/makeHomeSold`, {
         id: homeId,
       });
-      setHome(res.data[0]);
+      await axios.post(`http://localhost:8800/api/homes/updateOwner`, {
+        id: homeId,
+        owner,
+      });
     } catch(err) {
       console.log(err);
     }
   };
-
-  const connectHandler = async () => {
-    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
-    const account = ethers.utils.getAddress(accounts[0])
-    setAccount(account)
-  }
 
   const mintNFT = async () => {
     setLoading(true)
@@ -73,7 +70,9 @@ const Purchase = () => {
     try {
       const transaction = await tokenMaster.connect(signer).createNFT(uri, tokenId, { value: valueInWei });
       await transaction.wait();
-      await updateHomeForSaleStatus()
+
+      console.log(transaction)
+      await updateHomeForSaleStatus(transaction.from)
       navigate(`/purchased/${homeId}`);
     } catch (error) {
       console.log(error)
@@ -119,11 +118,7 @@ const Purchase = () => {
             {loading ? (
               <button>Loading...</button>
             ) : (
-              account ? (
-                <button onClick={mintNFT}>Mint Random Fish Trophy</button>
-              ) : (
-                <button onClick={connectHandler}>Connect to MetaMask</button>
-              )
+              <button onClick={mintNFT}>Mint Random Fish Trophy</button>
             )}
           </div>
         </div>
