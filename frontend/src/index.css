@@ -259,7 +259,6 @@ span {
 h1 {
   margin: 50px 0px;
 }
-
 @media screen and (max-width: 433px) {
   .filterGrid {
     display: grid;
@@ -271,5 +270,62 @@ h1 {
   }
   .filterGrid select {
     margin-right: 0px;
+  }
+}
+
+.signInPage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 50px;
+  text-align: center;
+}
+.signInText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.signInTitle {
+  font-size: 60px;
+  font-weight: 900;
+  max-width: 406px;
+}
+.signInBody {
+  font-size: 18px;
+  font-weight: 100;
+  width: 75%;
+  margin-top: 16px;
+}
+.signInButton button {
+  margin-top: 16px;
+  padding: 12px 32px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  font-weight: 900;
+  color: white;
+  background-color: #38B6FF;
+}
+.signInButton button:hover {
+  background-color: #38b6ffc7;
+}
+.macImage {
+  width: 100%;
+}
+.phoneImage {
+  display: none;
+}
+@media screen and (max-width: 991px) {
+  .signInPage {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+  }
+  .macImage {
+    display: none;
+  }
+  .phoneImage {
+    display: initial;
+    width: 100%;
+    margin-top: 50px;
   }
 }

@@ -37,6 +37,7 @@ const Home = () => {
       <Navbar />
       <div className='mainBody'>
         <h1><span>New homes in </span>Los Iveros, NV</h1>
+
         <div className='filterGrid'>
           <select name="Status" id="Status" onChange={(e) => setFilterOne(`homes => homes.owned !== '${e.target.value}'`)}>
             <option value="" selected>Status</option>
@@ -63,7 +64,9 @@ const Home = () => {
           </select>
           <button onClick={resetFilter}>Reset</button>
         </div>
+
         <div className='numsHomesShown'>Showing {filteredHome.length} Homes</div>
+        
         <div className='homeGrid'>
           {filteredHome.map(home => (
             <div key={home.id} className='homeCard'>
