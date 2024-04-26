@@ -75,7 +75,8 @@ const Purchase = () => {
 
       console.log(transaction)
       await updateHomeForSaleStatus(transaction.from)
-      navigate(`/purchased/${homeId}`);
+      // navigate(`/purchased/${homeId}`);
+      navigate('/myhomes');
     } catch (error) {
       console.log(error)
 
