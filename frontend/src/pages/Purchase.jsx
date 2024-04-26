@@ -15,6 +15,7 @@ const Purchase = () => {
   const [tokenMaster, setTokenMaster] = useState(null)
   const [loading, setLoading] = useState(false)
   const [nftCost, setNftCost] = useState(0)
+  const [errorMessage, setErrorMessage] = useState('')
   /* const network = 'matic' */
   const cryptoNetwork = 'sepolia'
   const tokenId = homeId < 10 ? `0${homeId}` : `${homeId}`
@@ -59,6 +60,7 @@ const Purchase = () => {
   };
 
   const mintNFT = async () => {
+    setErrorMessage("");
     setLoading(true)
 
     const uri = `${import.meta.env.VITE_PINATA_LINK}/${tokenId}.json`
@@ -78,15 +80,15 @@ const Purchase = () => {
       console.log(error)
 
       if (error.message.includes("insufficient funds")) {
-        console.log("HIIIIIIII");
+        setErrorMessage("Insufficient Funds!");
       } else if (error.message.includes("user rejected transaction")) {
-        console.log("BYYYEEEEEE");
+        setErrorMessage("User Rejected Transaction!");
       } else if (error.message.includes("Cannot read properties of null")) {
-        console.log("HOOOLLLAAAA");
+        setErrorMessage("User Not On Polygon Network!");
       } else if (error.message.includes("Home with this ID already exists")) {
-        console.log("ADDDIIIOOOOSSSSS");
+        setErrorMessage("Home Already Sold!");
       } else {
-        console.log("ERRROOOOOORRRRR");
+        setErrorMessage("Error Selling Home!");
       }
     } finally {
       setLoading(false);
@@ -97,32 +99,55 @@ const Purchase = () => {
     <> 
       <Navbar />
       <div className='mainBody'>
-        <div className='purchseGrid'>
-          <div>
-            <img src={`${home.image}`} alt={`${home.address}`}  height={200}/>
-            <div>{home.id} - {home.address} - {home.beds} - {home.baths} - {home.cost}</div>
-          </div>
-          <div className='formSection'>
-              <div className='formCard'>
-                <h2>Mint your Fish Trophy</h2>
-
-                <div className='price'>
-                  <div>{nftCost} Matic</div>
-                  <div>Sale is active!</div>
-                </div>
-
-                <div className='rarityChange'>
-                  <input type="checkbox" onChange={() => setNftCost(nftCost === 0 ? 5 : 0)} checked={nftCost !== 0}/>
-                  <div>Increse Rarity Probability: +5 Matic</div>
-                </div>
-
-                {loading ? (
-                  <button>Loading...</button>
-                ) : (
-                  <button onClick={mintNFT}>Mint Random Fish Trophy</button>
-                )}
+        <div>
+          <div className='purchaseAddress'><span>{home.address}</span><br />Los Iveros, NV</div>
+          <div className='purchaseInfo'>
+            <div className='sideBorder purchaseCost'>from<span> {home.cost} Matic</span></div>
+            <div className='sideBorder purchaseStats'>
+              <div>
+                <span>{home.beds}</span>
+                <div>BEDS</div>
+              </div>
+              <div>
+                <span>{home.baths}</span>
+                <div>BATHS</div>
+              </div>
+              <div>
+                <span>2</span>
+                <div>CARS</div>
+              </div>
+              <div>
+                <span>2</span>
+                <div>STORIES</div>
+              </div>
+              <div>
+                <span>1,634</span>
+                <div>SQFT</div>
               </div>
             </div>
+            {loading ? (
+              <div className='purchaseButton'><button onClick={mintNFT}>Loading...</button></div>
+              ) : (
+              <div className='purchaseButton'><button onClick={mintNFT}>Buy {home.address}</button></div>
+            )}
+          </div>
+          {errorMessage !== "" && <div className='errorMessage'>{errorMessage}</div>}
+          <div className='photoGrid'>
+            <div className='photoGridTop'>
+              <div>
+                <img src={`${home.image}`} alt={`${home.address}`}/>
+              </div>
+              <div className='photoGridTopRight'>
+                <img src={`${import.meta.env.VITE_PHOTO_SERVER_LINK}/1.webp`} alt="" />              
+                <img src={`${import.meta.env.VITE_PHOTO_SERVER_LINK}/2.webp`} alt="" />
+              </div>
+            </div>
+            <div className='photoGridBottom'>
+              <img src={`${import.meta.env.VITE_PHOTO_SERVER_LINK}/3.webp`} alt="" />
+              <img src={`${import.meta.env.VITE_PHOTO_SERVER_LINK}/4.webp`} alt="" />
+              <img src={`${import.meta.env.VITE_PHOTO_SERVER_LINK}/5.webp`} alt="" />
+            </div>
+          </div>
         </div>
       </div>
     </>  
