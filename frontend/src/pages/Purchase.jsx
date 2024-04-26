@@ -21,7 +21,7 @@ const Purchase = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.post(`http://localhost:8800/api/homes/getSingleHome`, {
+      const res = await axios.post(`${import.meta.env.VITE_SERVER_LINK}/api/homes/getSingleHome`, {
         id: homeId,
       });
       setHome(res.data[0]);
@@ -46,10 +46,10 @@ const Purchase = () => {
 
   const updateHomeForSaleStatus = async (owner) => {
     try {
-      await axios.post(`http://localhost:8800/api/homes/makeHomeSold`, {
+      await axios.post(`${import.meta.env.VITE_SERVER_LINK}/api/homes/makeHomeSold`, {
         id: homeId,
       });
-      await axios.post(`http://localhost:8800/api/homes/updateOwner`, {
+      await axios.post(`${import.meta.env.VITE_SERVER_LINK}/api/homes/updateOwner`, {
         id: homeId,
         owner,
       });
@@ -61,7 +61,7 @@ const Purchase = () => {
   const mintNFT = async () => {
     setLoading(true)
 
-    const uri = `https://copper-kind-coyote-634.mypinata.cloud/ipfs/QmdrXBsMEWv4oWX8KTVy1RDRLmwsNSuf3m7TwXrdRZueE6/${tokenId}.json`
+    const uri = `${import.meta.env.VITE_PINATA_LINK}/${tokenId}.json`
 
     const signer = await provider.getSigner()
     // const valueInWei = ethers.utils.parseEther(`${home.cost}`);
@@ -95,34 +95,36 @@ const Purchase = () => {
   
   return (   
     <> 
-    <Navbar />
-    <div className='purchseGrid'>
-      <div>
-        <img src={`${home.image}`} alt={`${home.address}`}  height={200}/>
-        <div>{home.id} - {home.address} - {home.beds} - {home.baths} - {home.cost}</div>
-      </div>
-      <div className='formSection'>
-          <div className='formCard'>
-            <h2>Mint your Fish Trophy</h2>
-
-            <div className='price'>
-              <div>{nftCost} Matic</div>
-              <div>Sale is active!</div>
-            </div>
-
-            <div className='rarityChange'>
-              <input type="checkbox" onChange={() => setNftCost(nftCost === 0 ? 5 : 0)} checked={nftCost !== 0}/>
-              <div>Increse Rarity Probability: +5 Matic</div>
-            </div>
-
-            {loading ? (
-              <button>Loading...</button>
-            ) : (
-              <button onClick={mintNFT}>Mint Random Fish Trophy</button>
-            )}
+      <Navbar />
+      <div className='mainBody'>
+        <div className='purchseGrid'>
+          <div>
+            <img src={`${home.image}`} alt={`${home.address}`}  height={200}/>
+            <div>{home.id} - {home.address} - {home.beds} - {home.baths} - {home.cost}</div>
           </div>
+          <div className='formSection'>
+              <div className='formCard'>
+                <h2>Mint your Fish Trophy</h2>
+
+                <div className='price'>
+                  <div>{nftCost} Matic</div>
+                  <div>Sale is active!</div>
+                </div>
+
+                <div className='rarityChange'>
+                  <input type="checkbox" onChange={() => setNftCost(nftCost === 0 ? 5 : 0)} checked={nftCost !== 0}/>
+                  <div>Increse Rarity Probability: +5 Matic</div>
+                </div>
+
+                {loading ? (
+                  <button>Loading...</button>
+                ) : (
+                  <button onClick={mintNFT}>Mint Random Fish Trophy</button>
+                )}
+              </div>
+            </div>
         </div>
-    </div>
+      </div>
     </>  
   )
 }

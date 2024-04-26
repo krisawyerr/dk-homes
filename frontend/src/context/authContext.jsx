@@ -15,7 +15,7 @@ export const AuthContextProvider = ({children}) => {
 
         await new Promise((resolve) => setTimeout(resolve, 1000))
 
-        const res = await axios.post("http://localhost:8800/api/auth/authenticate", {
+        const res = await axios.post(`${import.meta.env.VITE_SERVER_LINK}/api/auth/authenticate`, {
             username: account,
             password: account,
         });
@@ -23,7 +23,7 @@ export const AuthContextProvider = ({children}) => {
     }
 
     const logout = async(input) => {
-        const res = await axios.post("http://localhost:8800/api/auth/logout");
+        const res = await axios.post(`${import.meta.env.VITE_SERVER_LINK}/api/auth/logout`);
         setCurrentUser(null)
         setCurrentAccount(null)
     }

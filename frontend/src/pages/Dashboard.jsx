@@ -25,7 +25,7 @@ const Dashboard = () => {
 
     const fetchData = async () => {
         try {
-        const res = await axios.post(`http://localhost:8800/api/homes/getSingleHome`, {
+        const res = await axios.post(`${import.meta.env.VITE_SERVER_LINK}/api/homes/getSingleHome`, {
             id: homeId,
         });
         setHome(res.data[0]);
@@ -53,12 +53,20 @@ const Dashboard = () => {
 
     return (
         <>         
-        <Navbar />             
-        {owner === currentUser.username && <div>Dashboard</div>}
-        {owner !== currentUser.username && <div>
-            <h1>You do not own this home!</h1>
-            <a href="/myhomes"><button>Return to My Homes</button></a>
-        </div>}
+        <Navbar />
+        <div className='mainBody'>
+            {currentUser && owner === currentUser.username && <div>
+                <img src={`${home.image}`} alt={`${home.address}`}  height={200}/>
+                <div>{home.id} - {home.address} - {home.beds} - {home.baths} - {home.cost}</div>
+            </div>}
+
+            {currentUser && owner !== currentUser.username && <div>
+                <h1>You do not own this home!</h1>
+                <a href="/myhomes"><button>Return to My Homes</button></a>
+            </div>}
+
+            {!currentUser && <div>Sign in to see homes!</div>}
+        </div>
         </>
     )
 }

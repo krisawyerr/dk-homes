@@ -7,11 +7,9 @@ const MyHomes = () => {
   const [homes, setHomes] = useState([]);
   const { currentUser, login, logout } = useContext(AuthContext);
 
-  console.log(currentUser.username)
-
   const fetchData = async () => {
     try {
-      const res = await axios.post(`http://localhost:8800/api/homes/getUsersHomes`, {
+      const res = await axios.post(`${import.meta.env.VITE_SERVER_LINK}/api/homes/getUsersHomes`, {
         id: currentUser.username,
       });
       setHomes(res.data);
@@ -24,19 +22,20 @@ const MyHomes = () => {
     fetchData();
   }, []);
 
-  console.log(homes);
-
   return (      
     <>
     <Navbar />
-    <div className='homeGrid'>
-      {homes.map(home => (
-        <div key={home.id}>
-          <img src={`${home.image}`} alt={`${home.address}`}  height={200}/>
-          <div>{home.id} - {home.address} - {home.beds} - {home.baths} - {home.cost}</div>
-          <a href={`/dashboard/${home.id}`}><button>Access Home Dashboard</button></a>
-        </div>
-      ))}
+    <div className='mainBody'>
+      {currentUser && <div className='homeGrid'>
+        {homes.map(home => (
+          <div key={home.id}>
+            <img src={`${home.image}`} alt={`${home.address}`}  height={200}/>
+            <div>{home.id} - {home.address} - {home.beds} - {home.baths} - {home.cost}</div>
+            <a href={`/dashboard/${home.id}`}><button>Access Home Dashboard</button></a>
+          </div>
+        ))}
+      </div>}
+      {!currentUser && <div>Sign in to see homes!</div>}
     </div>
     </>
   )

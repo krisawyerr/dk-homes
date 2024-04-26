@@ -5,20 +5,47 @@ import { AuthContext } from "../context/authContext";
 
 const Navbar = () => {
   const { currentUser, login, logout } = useContext(AuthContext);
+  const [menuOpen, setMenuOpen] = useState(false)
 
   async function handleLogin() {
     try {
       await login()
+      window.location.reload();
     } catch (err) {
       setErr(err.response.data);
     }
   }
 
   return (
-    <div className='navbar'>
-      <div>DK Home</div>
-      {!currentUser ? <button onClick={handleLogin}>Connect Metamask</button> : <button onClick={logout}>Logout</button>}
+    <>
+    <div className='nav'>
+      <div className='navbar'>
+        <img src="/dkhomeslogo.png" alt="dk homes"/>
+        <div className='navRight'>
+          <div className='navTopRowContainer'>
+            <div className='navTopRow'>
+              <a href="/"><button className='navTopRowButton'>Find a Home</button></a>
+              <a href="/myhomes"><button className='navTopRowButton'>My Homes</button></a>
+              {!currentUser ? <button onClick={handleLogin} className='metamask'>Connect Metamask</button> : <button onClick={logout} className='metamask'>Logout</button>}
+            </div>
+          </div>
+          <div className='navBottomRow'>
+            <div>Built on Relationships</div>
+            <div>Buy a Home Today!</div>
+          </div>
+        </div>
+        <div className='navMenu'>
+          {!menuOpen && <img src="/menu.svg" alt="menu" onClick={() => setMenuOpen(true)}/>}
+          {menuOpen && <img src="/x.svg" alt="menu" onClick={() => setMenuOpen(false)}/>}
+        </div>
+      </div>
+      {menuOpen && <div className='menuBody'>
+        <button className='menuBodyButton'>Find a Home</button>
+        <button className='menuBodyButton'>My Homes</button>
+        <button className='metamask'>Connect to Metamask</button>
+      </div>}
     </div>
+    </>
   )
 }
 
