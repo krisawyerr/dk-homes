@@ -33,12 +33,34 @@ const Purchase = () => {
   };
   
   const loadBlockchainData = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum, cryptoNetwork)
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
     setProvider(provider)
   
-    const network = await provider.getNetwork()
-    const tokenMasterr = new ethers.Contract(NFTAddress.address, NFTAbi, provider)
-    setTokenMaster(tokenMasterr)
+      window.ethereum.on('chainChanged', handleChainChanged);
+  
+      const network = await provider.getNetwork()
+      if (network.name !== cryptoNetwork) {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x89' }]
+        });
+      }
+      
+      const tokenMasterr = new ethers.Contract(NFTAddress.address, NFTAbi, provider)
+      setTokenMaster(tokenMasterr)
+
+  }
+  
+  const handleChainChanged = async (chainId) => {
+    if (chainId !== '0x89') {
+      alert("Please switch to the Polygon network");
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x89' }] 
+      });
+    } else {
+      window.location.reload();
+    }
   }
   
   useEffect(() => {
