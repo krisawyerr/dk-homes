@@ -1,5 +1,4 @@
 import { db } from "../db.js"
-import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 
 export const authenticate = (req, res) => {
@@ -10,7 +9,6 @@ export const authenticate = (req, res) => {
         if (err) return res.json(err);
         
         if (data.length === 0) {
-            // Registration
             const insertQuery = "INSERT INTO users (`username`,`password`) VALUES (?, ?)";
             const values = [username, password];
             
@@ -20,7 +18,6 @@ export const authenticate = (req, res) => {
                 res.status(200).json("User has been created.");
             });
         } else {
-            // Login
             const isPasswordCorrect = (data[0].password === req.body.password);
             
             if (!isPasswordCorrect) {
@@ -36,7 +33,6 @@ export const authenticate = (req, res) => {
         }
     });
 };
-
 
 export const logout = (req, res) => {
     res.clearCookie("access_token",{

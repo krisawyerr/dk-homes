@@ -9,17 +9,11 @@ import { AuthContext } from "../context/authContext";
 import Loader from '../components/Loader';
 
 const Dashboard = () => {  
-    const { currentUser, login, logout } = useContext(AuthContext);
-    const navigate = useNavigate();
+    const { currentUser, login } = useContext(AuthContext);
     const [home, setHome] = useState([]);
     const homeId = parseInt(window.location.pathname.split('/').pop());
-    const [provider, setProvider] = useState(null)
-    const [account, setAccount] = useState(null)
-    const [tokenMaster, setTokenMaster] = useState(null)
     const [owner, setOwner] = useState()
-    const [loading, setLoading] = useState(false)
     const [nftCost, setNftCost] = useState(0)
-    const [isYourHome, setIsYourHome] = useState(false)
     const [editOpen, setEditOpen] = useState(0)
     const [fullName, setFullName] = useState()
     const [gateCode, setGateCode] = useState()
@@ -44,17 +38,13 @@ const Dashboard = () => {
           setDoorCode(res.data[0].doorCode)  
         }
         } catch(err) {
-        console.log(err);
+        console.error(err);
         }
     };
   
     const loadBlockchainData = async () => {
         const provider = new ethers.providers.Web3Provider(window.ethereum, cryptoNetwork)
-        setProvider(provider)
-    
-        const network = await provider.getNetwork()
         const tokenMasterr = new ethers.Contract(NFTAddress.address, NFTAbi, provider)
-        setTokenMaster(tokenMasterr)
 
         const ownerAddress = await tokenMasterr.ownerOf(tokenId)
         setOwner(ownerAddress)
@@ -67,10 +57,10 @@ const Dashboard = () => {
 
     async function handleLogin() {
         try {
-          await login()
-          window.location.reload();
+            await login()
+            window.location.reload();
         } catch (err) {
-          setErr(err.response.data);
+            console.error(err.response.data);
         }
     }
 

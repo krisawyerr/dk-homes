@@ -12,10 +12,8 @@ const Purchase = () => {
   const [home, setHome] = useState([]);
   const homeId = parseInt(window.location.pathname.split('/').pop());
   const [provider, setProvider] = useState(null)
-  const [account, setAccount] = useState(null)
   const [tokenMaster, setTokenMaster] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [nftCost, setNftCost] = useState(0)
   const [errorMessage, setErrorMessage] = useState('')
   const cryptoNetwork = 'matic'
   // const cryptoNetwork = 'sepolia'
@@ -28,7 +26,7 @@ const Purchase = () => {
       });
       setHome(res.data[0]);
     } catch(err) {
-      console.log(err);
+      console.error(err);
     }
   };
   
@@ -78,7 +76,7 @@ const Purchase = () => {
         owner,
       });
     } catch(err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
@@ -96,13 +94,9 @@ const Purchase = () => {
       const transaction = await tokenMaster.connect(signer).createNFT(uri, tokenId, { value: valueInWei });
       await transaction.wait();
 
-      console.log(transaction)
       await updateHomeForSaleStatus(transaction.from)
-      // navigate(`/purchased/${homeId}`);
       navigate('/myhomes');
     } catch (error) {
-      console.log(error)
-
       if (error.message.includes("insufficient funds")) {
         setErrorMessage("Insufficient Funds!");
       } else if (error.message.includes("user rejected transaction")) {

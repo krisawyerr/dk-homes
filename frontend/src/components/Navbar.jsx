@@ -1,6 +1,4 @@
 import React, { useContext, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import axios from "axios"
 import { AuthContext } from "../context/authContext";
 
 const Navbar = () => {
@@ -12,7 +10,7 @@ const Navbar = () => {
       await login()
       window.location.reload();
     } catch (err) {
-      setErr(err.response.data);
+      console.error(err.response.data);
     }
   }
 

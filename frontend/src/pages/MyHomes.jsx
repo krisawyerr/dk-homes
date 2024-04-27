@@ -6,7 +6,7 @@ import Loader from '../components/Loader';
 
 const MyHomes = () => {
   const [homes, setHomes] = useState([]);
-  const { currentUser, login, logout } = useContext(AuthContext);
+  const { currentUser, login } = useContext(AuthContext);
 
   const fetchData = async () => {
     try {
@@ -15,7 +15,7 @@ const MyHomes = () => {
       });
       setHomes(res.data);
     } catch(err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
@@ -28,7 +28,7 @@ const MyHomes = () => {
       await login()
       window.location.reload();
     } catch (err) {
-      setErr(err.response.data);
+      console.error(err.response.data);
     }
   }
 
