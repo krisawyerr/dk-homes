@@ -33,6 +33,10 @@ body {
 .navbar img {
   width: 140px;
 }
+.LogaA {
+  height: 140px;
+  width: 140px;
+}
 .navRight {
   display: grid;
   grid-template-rows: 2fr 1fr;
@@ -94,6 +98,10 @@ body {
   .navbar img {
     width: 100px;
   }
+  .LogaA {
+    height: 100px;
+    width: 100px;
+  }
   .navRight {
     grid-template-rows: 1fr 1fr;
   }
@@ -106,6 +114,10 @@ body {
     justify-content: space-between;
   }
   .navbar img {
+    width: 50px;
+  }
+  .LogaA {
+    height: 50px;
     width: 50px;
   }
   .navMenu {
