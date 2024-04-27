@@ -24,8 +24,8 @@ const Dashboard = () => {
     const [fullName, setFullName] = useState()
     const [gateCode, setGateCode] = useState()
     const [doorCode, setDoorCode] = useState()
-    /* const network = 'matic' */
-    const cryptoNetwork = 'sepolia'
+    const cryptoNetwork = 'matic'
+    // const cryptoNetwork = 'sepolia'
     const tokenId = homeId < 10 ? `0${homeId}` : `${homeId}`
 
     const fetchData = async () => {

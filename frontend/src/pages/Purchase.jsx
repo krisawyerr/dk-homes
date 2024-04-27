@@ -17,8 +17,8 @@ const Purchase = () => {
   const [loading, setLoading] = useState(false)
   const [nftCost, setNftCost] = useState(0)
   const [errorMessage, setErrorMessage] = useState('')
-  /* const network = 'matic' */
-  const cryptoNetwork = 'sepolia'
+  const cryptoNetwork = 'matic'
+  // const cryptoNetwork = 'sepolia'
   const tokenId = homeId < 10 ? `0${homeId}` : `${homeId}`
 
   const fetchData = async () => {
