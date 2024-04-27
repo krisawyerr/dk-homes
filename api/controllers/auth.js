@@ -4,14 +4,14 @@ import jwt from "jsonwebtoken"
 
 export const authenticate = (req, res) => {
     const { username, password } = req.body;
-    const q = "select * from dkhomes.users where username = ?";
+    const q = "select * from users where username = ?";
     
     db.query(q, [username], (err, data) => {
         if (err) return res.json(err);
         
         if (data.length === 0) {
             // Registration
-            const insertQuery = "INSERT INTO dkhomes.users (`username`,`password`) VALUES (?, ?)";
+            const insertQuery = "INSERT INTO users (`username`,`password`) VALUES (?, ?)";
             const values = [username, password];
             
             db.query(insertQuery, values, (err, result) => {

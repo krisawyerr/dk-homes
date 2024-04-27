@@ -1,7 +1,7 @@
 import { db } from "../db.js"
 
 export const getHomes = (req, res) => {
-    const q = "SELECT * FROM dkhomes.homes";
+    const q = "SELECT * FROM homes";
     db.query(q, [], (err, data) => {
         if (err) return res.status(500).json(err);
         return res.status(200).json(data);
@@ -9,7 +9,7 @@ export const getHomes = (req, res) => {
 };
 
 export const getSingleHome = (req, res) => {
-    const q = "SELECT * FROM dkhomes.homes where id = ?";
+    const q = "SELECT * FROM homes where id = ?";
     db.query(q, [req.body.id], (err, data) => {
         if (err) return res.status(500).json(err);
         return res.status(200).json(data);
@@ -17,7 +17,7 @@ export const getSingleHome = (req, res) => {
 };
 
 export const makeHomeSold = (req, res) => {
-    const q = "UPDATE dkhomes.homes SET owned = 'TRUE' WHERE id = ?";
+    const q = "UPDATE homes SET owned = 'TRUE' WHERE id = ?";
     db.query(q, [req.body.id], (err, data) => {
         if (err) return res.status(500).json(err);
         return res.status(200).json(data);
@@ -25,7 +25,7 @@ export const makeHomeSold = (req, res) => {
 };
 
 export const updateOwner = (req, res) => {
-    const q = "UPDATE dkhomes.homes SET ownerWallet = ? WHERE id = ?";
+    const q = "UPDATE homes SET ownerWallet = ? WHERE id = ?";
     db.query(q, [req.body.owner, req.body.id], (err, data) => {
         if (err) return res.status(500).json(err);
         return res.status(200).json(data);
@@ -33,7 +33,7 @@ export const updateOwner = (req, res) => {
 };
 
 export const getUsersHomes = (req, res) => {
-    const q = "SELECT * FROM dkhomes.homes where ownerWallet = ?";
+    const q = "SELECT * FROM homes where ownerWallet = ?";
     db.query(q, [req.body.id], (err, data) => {
         if (err) return res.status(500).json(err);
         return res.status(200).json(data);
@@ -41,7 +41,7 @@ export const getUsersHomes = (req, res) => {
 };
 
 export const updateOwnerName = (req, res) => {
-    const q = "UPDATE dkhomes.homes SET owner = ? WHERE id = ?";
+    const q = "UPDATE homes SET owner = ? WHERE id = ?";
     db.query(q, [req.body.owner, req.body.id], (err, data) => {
         if (err) return res.status(500).json(err);
         return res.status(200).json(data);
@@ -49,7 +49,7 @@ export const updateOwnerName = (req, res) => {
 };
 
 export const updateGateCode = (req, res) => {
-    const q = "UPDATE dkhomes.homes SET gateCode = ? WHERE id = ?";
+    const q = "UPDATE homes SET gateCode = ? WHERE id = ?";
     db.query(q, [req.body.gateCode, req.body.id], (err, data) => {
         if (err) return res.status(500).json(err);
         return res.status(200).json(data);
@@ -57,7 +57,7 @@ export const updateGateCode = (req, res) => {
 };
 
 export const updateDoorCode = (req, res) => {
-    const q = "UPDATE dkhomes.homes SET doorCode = ? WHERE id = ?";
+    const q = "UPDATE homes SET doorCode = ? WHERE id = ?";
     db.query(q, [req.body.doorCode, req.body.id], (err, data) => {
         if (err) return res.status(500).json(err);
         return res.status(200).json(data);

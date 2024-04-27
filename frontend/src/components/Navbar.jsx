@@ -40,9 +40,9 @@ const Navbar = () => {
         </div>
       </div>
       {menuOpen && <div className='menuBody'>
-        <button className='menuBodyButton'>Find a Home</button>
-        <button className='menuBodyButton'>My Homes</button>
-        <button className='metamask'>Connect to Metamask</button>
+        <a href="/"><button className='menuBodyButton'>Find a Home</button></a>
+        <a href="/myhomes"><button className='menuBodyButton'>My Homes</button></a>
+        {!currentUser ? <button onClick={handleLogin} className='metamask'>Connect Metamask</button> : <button onClick={logout} className='metamask'>Logout</button>}
       </div>}
     </div>
     </>

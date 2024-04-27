@@ -125,13 +125,17 @@ body {
     flex-direction: column;
     background-color: #ffffff;
   }
+  .menuBody a {
+    width: calc(100vw - 34px);
+    margin: 17px;
+  }
   .menuBodyButton {
     background-color: #ffffff;
     border: #38B6FF 1px solid;
     font-size: 16px;
     padding: 7px;
-    margin: 17px;
     font-weight: 700;
+    width: 100%;
   }
   .menuBodyButton:hover {
     background-color: #38B6FF;
