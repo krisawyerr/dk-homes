@@ -5,6 +5,7 @@ import NFTAddress from '../ContractsData/MyNFT-address.json'
 import { ethers } from "ethers"
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar';
+import Loader from '../components/Loader';
 
 const Purchase = () => {
   const navigate = useNavigate();

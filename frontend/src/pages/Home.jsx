@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from "axios";
 import Navbar from '../components/Navbar';
 import { AuthContext } from "../context/authContext";
+import Loader from '../components/Loader';
 
 const Home = () => {
   const [homes, setHomes] = useState([]);
