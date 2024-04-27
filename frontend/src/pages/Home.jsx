@@ -35,7 +35,8 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <div className='mainBody'>
+      {!homes && <Loader />}
+      {homes && <div className='mainBody'>
         <h1><span>New homes in </span>Los Iveros, NV</h1>
 
         <div className='filterGrid'>
@@ -101,7 +102,7 @@ const Home = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div>}
     </>
   );
 };

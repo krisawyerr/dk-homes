@@ -34,7 +34,8 @@ const MyHomes = () => {
   return (      
     <>
     <Navbar />
-    <div className='mainBody'>
+    {!homes && <Loader />}
+    {homes && <div className='mainBody'>
       {currentUser && <div className='homeGrid'>
         {homes.map(home => (
           <div key={home.id} className='homeCard'>
@@ -81,7 +82,7 @@ const MyHomes = () => {
           <img src="/iphone.png" alt="My Homes Page" className='phoneImage'/>
         </div>
       </div>}
-    </div>
+    </div>}
     </>
   )
 }

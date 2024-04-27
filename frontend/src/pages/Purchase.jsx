@@ -99,7 +99,8 @@ const Purchase = () => {
   return (   
     <> 
       <Navbar />
-      <div className='mainBody'>
+      {!home || !tokenMaster && <Loader />}
+      {home && tokenMaster && <div className='mainBody'>
         <div>
           <div className='purchaseAddress'><span>{home.address}</span><br />Los Iveros, NV</div>
           <div className='purchaseInfo'>
@@ -150,7 +151,7 @@ const Purchase = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div>}
     </>  
   )
 }

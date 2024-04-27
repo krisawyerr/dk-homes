@@ -39,3 +39,27 @@ export const getUsersHomes = (req, res) => {
         return res.status(200).json(data);
     });
 };
+
+export const updateOwnerName = (req, res) => {
+    const q = "UPDATE dkhomes.homes SET owner = ? WHERE id = ?";
+    db.query(q, [req.body.owner, req.body.id], (err, data) => {
+        if (err) return res.status(500).json(err);
+        return res.status(200).json(data);
+    });
+};
+
+export const updateGateCode = (req, res) => {
+    const q = "UPDATE dkhomes.homes SET gateCode = ? WHERE id = ?";
+    db.query(q, [req.body.gateCode, req.body.id], (err, data) => {
+        if (err) return res.status(500).json(err);
+        return res.status(200).json(data);
+    });
+};
+
+export const updateDoorCode = (req, res) => {
+    const q = "UPDATE dkhomes.homes SET doorCode = ? WHERE id = ?";
+    db.query(q, [req.body.doorCode, req.body.id], (err, data) => {
+        if (err) return res.status(500).json(err);
+        return res.status(200).json(data);
+    });
+};
